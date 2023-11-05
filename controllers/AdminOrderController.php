@@ -33,8 +33,7 @@ class AdminOrderController extends AdminBase {
 
         // Обработка формы
         if (isset($_POST['submit'])) {
-            // Если форма отправлена   
-            // Получаем данные из формы
+            // Если форма отправлена, получаем данные из формы
             $userName = $_POST['userName'];
             $userPhone = $_POST['userPhone'];
             $userComment = $_POST['userComment'];
@@ -54,16 +53,16 @@ class AdminOrderController extends AdminBase {
     }
 
     /**
-     * Action для страницы "Удалить категорию"
+     * Action для страницы "Удалить заказ"
      */
     public function actionDelete($id) {
+
         // Проверка доступа
         self::checkAdmin();
 
         // Обработка формы
         if (isset($_POST['submit'])) {
-            // Если форма отправлена
-            // Удаляем категорию
+            // Если форма отправлена, удаляем категорию
             Order::deleteOrderById($id);
 
             // Перенаправляем пользователя на страницу управлениями товарами
@@ -79,6 +78,7 @@ class AdminOrderController extends AdminBase {
      * Action для страницы "Просмотр заказа"
      */
     public function actionView($id) {
+        
         //проверка доступа
         self::checkAdmin();
 

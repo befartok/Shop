@@ -1,24 +1,35 @@
 <?php
 
+/**
+ * Контроллер SiteController
+ */
 class SiteController {
 
+    /**
+     * Action для главной страницы
+     */
     public function actionIndex() {
 
-        $categories = array();
+        // Список категорий для левого меню
         $categories = Category::getCategoriesList();
 
-        $latestProducts = array();
+        // Список последних товаров
         $latestProducts = Product::getLatestProducts(6);
 
         // Список товаров для слайдера
         $sliderProducts = Product::getRecommendedProducts();
 
+        // Подключаем вид
         require_once (ROOT . '/views/site/index.php');
         return true;
     }
 
+    /**
+     * Action для страницы "О магазине"
+     */
     public function actionAbout() {
 
+        // Подключаем вид
         require_once (ROOT . '/views/site/about.php');
         return true;
     }
@@ -33,10 +44,9 @@ class SiteController {
         $userText = false;
         $result = false;
 
-        // Обработка формы
+        // Если форма отправлена, получаем данные из формы
         if (isset($_POST['submit'])) {
-            // Если форма отправлена 
-            // Получаем данные из формы
+
             $userEmail = $_POST['userEmail'];
             $userText = $_POST['userText'];
 
@@ -48,9 +58,9 @@ class SiteController {
                 $errors[] = 'Неправильный email';
             }
 
+            // Если ошибок нет, отправляем письмо администратору 
             if ($errors == false) {
-                // Если ошибок нет
-                // Отправляем письмо администратору 
+
                 $adminEmail = 'test@test.ru';
                 $message = "Текст: {$userText}. От {$userEmail}";
                 $subject = 'Тема письма';

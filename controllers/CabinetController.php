@@ -1,14 +1,8 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 /**
- * Description of CabinetController
- *
- * @author Alexei
+ * Контроллер CabinetController
+ * Кабинет пользователя
  */
 class CabinetController {
 
@@ -17,7 +11,6 @@ class CabinetController {
      */
     public function actionIndex() {
 
-        //User::setLog(' checkCabinetController');
         // Получаем идентификатор пользователя из сессии
         $userId = User::checkLogged();
 
@@ -29,9 +22,10 @@ class CabinetController {
         return true;
     }
 
+    /**
+     * Action для страницы "Редактирование данных пользователя"
+     */
     public function actionEdit() {
-
-
 
         // Получаем идентификатор пользователя из сессии
         $userId = User::checkLogged();
@@ -39,18 +33,20 @@ class CabinetController {
         // Получаем информацию о пользователе из БД
         $user = User::getUserById($userId);
 
+        // Заполняем переменные для полей формы
         $name = $user['name'];
         $password = $user['password'];
 
+        // Флаг результата
         $result = false;
 
+        // Если форма отправлена, получаем данные из формы
         if (isset($_POST['submit'])) {
 
-            // Если форма отправлена 
-            // Получаем данные из формы
             $name = $_POST['name'];
             $password = $_POST['password'];
 
+            // Флаг ошибок
             $errors = false;
 
             //валидация полей
@@ -61,14 +57,14 @@ class CabinetController {
             if (!User::checkPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
-            print_r(' $errors='.$errors);            var_dump($errors);
-            User::setLog(' $result= '.$result);
+
+            // Если ошибок нет, сохраняем изменения профиля
             if ($errors == false) {
                 $result = User::edit($userId, $name, $password);
             }
         }
 
-        // Подключаем вид
+        // Подключение вида
         require_once(ROOT . '/views/cabinet/edit.php');
         return true;
     }

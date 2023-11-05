@@ -6,10 +6,10 @@ error_reporting(E_ALL);
 
 session_start();
 
-//подключение файлов
+//Подключение файлов
 define('ROOT', dirname(__FILE__));
 require_once (ROOT . '/components/Autoload.php');
 
-//вызов роутера
+//Вызов роутера
 $router = new Router();
 $router->run();

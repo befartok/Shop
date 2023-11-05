@@ -1,13 +1,16 @@
 <?php
 
 /**
- * Description of AdminProductController
- *
- * @author Alexei
+ * Контроллер AdminProductController
+ * Управление товарами в админпанели
  */
 class AdminProductController extends AdminBase {
 
+    /**
+     * Action для страницы "Управление товарами"
+     */
     public function actionIndex() {
+
         //проверка доступа
         self::checkAdmin();
 
@@ -19,7 +22,9 @@ class AdminProductController extends AdminBase {
         return true;
     }
 
-    //удаление товара
+    /**
+     * Action для страницы "Удалить товар"
+     */
     public function actionDelete($id) {
 
         //проверка доступа
@@ -33,18 +38,20 @@ class AdminProductController extends AdminBase {
             header("Location: /admin/product");
         }
 
-
         //подключение вида
         require_once (ROOT . '/views/admin_product/delete.php');
         return true;
     }
 
+    /**
+     * Action для страницы "Добавить товар"
+     */
     public function actionCreate() {
 
         //проверка доступа
         self::checkAdmin();
 
-        //получение списка категорий для выпадающего списка
+        //получение списка категорий
         $categoriesList = Category::getCategoriesListAdmin();
 
         //если форма отправлена, получаем данные из формы
@@ -75,22 +82,23 @@ class AdminProductController extends AdminBase {
                 $id = Product::createProduct($options);
 
                 //проверка, загружалось ли  через форму изображение
-                echo '<pre>';
-                print_r($_FILES["image"]);
                 if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
                     //перенос его в нужную папку с новым имеем
                     move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
                 }
             }
 
-            //перенаправление на страницууправления товарами
+            //перенаправление на страницу управления товарами
             header("Location: /admin/product");
         }
         //подключение вида
         require_once(ROOT . '/views/admin_product/create.php');
         return true;
     }
-
+    
+    /**
+     * Action для страницы "Редактировать товар"
+     */
     public function actionUpdate($id) {
 
         //проверка доступа

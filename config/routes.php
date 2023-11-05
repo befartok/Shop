@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    //Товар
     'product/([0-9]+)' => 'product/view/$1', // actionView in ProductController
     //Каталог:
     'catalog' => 'catalog/index', // actionIndex в CatalogController
@@ -12,7 +13,7 @@ return array(
     'cart/add/([0-9]+)' => 'cart/add/$1', // actionAdd в CartController    
     'cart/delete/([0-9]+)' => 'cart/delete/$1', // actionDelete в CartController    
     'cart' => 'cart/index', //// actionIndex в CartController 
-    //Регистрация
+    //Пользователь
     'user/register' => 'user/register',
     'user/login' => 'user/login',
     'user/logout' => 'user/logout',

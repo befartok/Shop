@@ -1,27 +1,29 @@
 <?php
 
 /**
- * Description of UserController
- *
- * @author Alexei
+ * Контроллер UserController
  */
 class UserController {
 
+    /**
+     * Action для страницы "Регистрация"
+     */
     public function actionRegister() {
 
+        // Переменные для формы
         $name = '';
         $email = '';
         $password = '';
         $result = false;
 
+        // Если форма отправлена, получаем данные из формы
         if (isset($_POST['submit'])) {
 
-            // Если форма отправлена 
-            // Получаем данные из формы
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
+            // Флаг ошибок
             $errors = false;
 
             //валидация полей
@@ -44,8 +46,8 @@ class UserController {
             }
         }
 
+        // Подключаем вид
         require_once (ROOT . '/views/user/register.php');
-
         return true;
     }
 
@@ -59,14 +61,11 @@ class UserController {
 
         User::setLog(' testFromActionLogin1 ');
 
-        // Обработка формы
-        if (isset($_POST['submit'])) {  //не срабатывает!
-            // Если форма отправлена 
-            // Получаем данные из формы
+        // Если форма отправлена, получаем данные из формы
+        if (isset($_POST['submit'])) {
+
             $email = $_POST['email'];
             $password = $_POST['password'];
-
-            User::setLog(' testFromActionLogin2 ');
 
             // Флаг ошибок
             $errors = false;
@@ -78,22 +77,18 @@ class UserController {
             if (!User::checkPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
-            ////дает ошибку, но проходит валидацию пользователя проверить
+
             // Проверяем существует ли пользователь
             $userId = User::checkUserData($email, $password);
 
-            User::setLog(' $userId86= ' . $userId);
-
+            // Если данные неправильные - показываем ошибку
             if ($userId == false) {
-                // Если данные неправильные - показываем ошибку
                 $errors[] = 'Неправильные данные для входа на сайт';
             } else if ($errors == false) {
                 // Если данные правильные, запоминаем пользователя (сессия)
                 User::auth($userId);
 
-                User::setLog(' testFromActionLogin2-ok');
-
-                // Перенаправляем пользователя в закрытую часть - кабинет 
+                // Перенаправляем пользователя в кабинет 
                 header("Location: /cabinet");
             }
         }
@@ -104,12 +99,11 @@ class UserController {
     }
 
     /**
+     * Action выхода из учетной записи
      * Удаляем данные о пользователе из сессии
      */
     public function actionLogout() {
-        // Стартуем сессию
-        //session_start();
-
+        
         // Удаляем информацию о пользователе из сессии
         unset($_SESSION["user"]);
 

@@ -1,16 +1,20 @@
 <?php
 
 /**
- * Description of User
- *
- * @author Alexei
+ * Класс User - модель для работы с пользователями
  */
 class User {
+    //static $log = 'init';
 
-    static $log = 'init';
-    //static $logSessionUser;
-
+    /**
+     * Регистрация пользователя 
+     * @param string $name <p>Имя</p>
+     * @param string $email <p>E-mail</p>
+     * @param string $password <p>Пароль</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function register($name, $email, $password) {
+
         // Соединение с БД        
         $db = Db::getConnection();
 
@@ -25,6 +29,11 @@ class User {
         return $result->execute();
     }
 
+    /**
+     * Проверка имени: не меньше, чем 2 символа
+     * @param string $name <p>Имя</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function checkName($name) {
 
         if (strlen($name) >= 2) {
@@ -33,6 +42,11 @@ class User {
         return false;
     }
 
+    /**
+     * Проверяет пароля: не меньше, чем 6 символов
+     * @param string $password <p>Пароль</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function checkPassword($password) {
 
         if (strlen($password) >= 6) {
@@ -41,6 +55,11 @@ class User {
         return false;
     }
 
+    /**
+     * Проверяет email
+     * @param string $email <p>E-mail</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function checkEmail($email) {
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -79,11 +98,19 @@ class User {
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->execute();
 
-        if ($result->fetchColumn())
+        if ($result->fetchColumn()) {
             return true;
+        }
         return false;
     }
-
+    
+    /**
+     * Редактирование данных пользователя
+     * @param integer $id <p>id пользователя</p>
+     * @param string $name <p>Имя</p>
+     * @param string $password <p>Пароль</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function edit($id, $name, $password) {
 
         $db = Db::getConnection();
@@ -103,7 +130,7 @@ class User {
      * Проверяем существует ли пользователь с заданными $email и $password
      * @param string $email <p>E-mail</p>
      * @param string $password <p>Пароль</p>
-     * @return mixed : integer user id or false
+     * @return mixed : integer userId or false
      */
     public static function checkUserData($email, $password) {
 
@@ -128,33 +155,29 @@ class User {
         // Обращаемся к записи
         $user = $result->fetch();
 
-        self::setLog(' $user[id]= ' . $user['id']);
-
         if ($user) {
             // Если запись существует, возвращаем id пользователя
-            self::setLog('checkIfUser-ok');
-
             return $user['id'];
         }
         return false;
     }
 
-    public static function setLog($var) {
-        self::$log = self::$log . $var;
-    }
+//    public static function setLog($var) {
+//        self::$log = self::$log . $var;
+//    }
+//
+//    public static function getLog() {
+//        echo self::$log;
+//    }
 
-    public static function getLog() {
-        echo self::$log;
-    }
-
+    /**
+     * Запоминаем пользователя
+     * @param integer $userId <p>id пользователя</p>
+     */    
     public static function auth($userId) {
+       
         // Записываем идентификатор пользователя в сессию
-
         $_SESSION["user"] = $userId;
-
-//        User::setLog('testFromAuth-Ok-$userId=' . $userId);
-//        self::$logSessionUser = $_SESSION["user"];
-//        self::setLog(' $logSessionUser144= ' . self::$logSessionUser);
     }
 
     /**
@@ -163,8 +186,8 @@ class User {
      * @return string <p>Идентификатор пользователя</p>
      */
     public static function checkLogged() {
-        // Если сессия есть, вернем идентификатор пользователя
-        //self::setLog(' checkLogged ');
+        
+        // Если сессия есть, возвращаем идентификатор пользователя
 
         if (isset($_SESSION['user'])) {
 
@@ -179,6 +202,7 @@ class User {
      * @return array <p>Массив с информацией о пользователе</p>
      */
     public static function getUserById($id) {
+       
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -195,7 +219,11 @@ class User {
 
         return $result->fetch();
     }
-
+    
+    /**
+     * Проверяет является ли пользователь гостем
+     * @return boolean <p>Результат выполнения метода</p>
+     */
     public static function isGuest() {
 
         if (isset($_SESSION['user'])) {

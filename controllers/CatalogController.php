@@ -1,35 +1,45 @@
 <?php
 
-
+/**
+ * Контроллер CatalogController
+ * Каталог товаров
+ */
 class CatalogController {
 
+    /**
+     * Action для страницы "Каталог товаров"
+     */
     public function actionIndex() {
 
-        $categories = array();
+        // Список категорий для левого меню
         $categories = Category::getCategoriesList();
 
-        $latestProducts = array();
+        // Список последних товаров
         $latestProducts = Product::getLatestProducts(6);
 
+        // Подключаем вид        
         require_once (ROOT . '/views/catalog/index.php');
         return true;
     }
 
+    /**
+     * Action для страницы "Категория товаров"
+     */
     public function actionCategory($categoryId, $page = 1) {
 
-
-        
-        $categories = array();
+        // Список категорий для левого меню
         $categories = Category::getCategoriesList();
 
-        $categoryProducts = array();
+        // Список товаров в категории
         $categoryProducts = Product::getProductsListByCategory($categoryId, $page);
 
+        // Общее количетсво товаров
         $total = Product::getTotalProductsInCategory($categoryId);
-        
-        //создаем паджинатор
+
+        //Создаем паджинатор
         $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
 
+        // Подключаем вид
         require_once (ROOT . '/views/catalog/category.php');
         return true;
     }

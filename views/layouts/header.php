@@ -49,7 +49,7 @@
                                     <ul class="nav navbar-nav">
                                         <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
                                         <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
-                                        
+
                                     </ul>
                                 </div>
                             </div>
@@ -74,6 +74,8 @@
                                             </a></li>
                                         <?php if (User::isGuest()): ?>
                                             <li><a href="/user/login/"><i class="fa fa-lock"></i> Вход</a></li>
+                                            <li><a href="user/register/"><i class="fa fa-user"></i> Регистрация</a></li>
+
                                         <?php else : ?>
                                             <li><a href="/cabinet/"><i class="fa fa-user"></i> Аккаунт</a></li>
                                             <li><a href="/user/logout/"><i class="fa fa-unlock"></i> Выход</a></li>

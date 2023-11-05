@@ -30,8 +30,7 @@ class Category
     }
 
     /**
-     * Возвращает массив категорий для списка в админпанели <br/>
-     * (при этом в результат попадают и включенные и выключенные категории)
+     * Возвращает массив категорий для списка в админпанели 
      * @return array <p>Массив категорий</p>
      */
     public static function getCategoriesListAdmin()
@@ -79,7 +78,7 @@ class Category
      * @param integer $id <p>id категории</p>
      * @param string $name <p>Название</p>
      * @param integer $sortOrder <p>Порядковый номер</p>
-     * @param integer $status <p>Статус <i>(включено "1", выключено "0")</i></p>
+     * @param integer $status <p>Статус (включено "1", выключено "0")</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
     public static function updateCategoryById($id, $name, $sortOrder, $status)
@@ -132,8 +131,7 @@ class Category
     }
 
     /**
-     * Возвращает текстое пояснение статуса для категории :<br/>
-     * <i>0 - Скрыта, 1 - Отображается</i>
+     * Возвращает текстое пояснение статуса для категории 
      * @param integer $status <p>Статус</p>
      * @return string <p>Текстовое пояснение</p>
      */
@@ -153,7 +151,7 @@ class Category
      * Добавляет новую категорию
      * @param string $name <p>Название</p>
      * @param integer $sortOrder <p>Порядковый номер</p>
-     * @param integer $status <p>Статус <i>(включено "1", выключено "0")</i></p>
+     * @param integer $status <p>Статус (включено "1", выключено "0")</p>
      * @return boolean <p>Результат добавления записи в таблицу</p>
      */
     public static function createCategory($name, $sortOrder, $status)

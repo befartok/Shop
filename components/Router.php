@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Класс Router
- * Компонент для работы с маршрутами
+ * Класс Router для работы с маршрутами
  */
 class Router {
 
     /**
      * Свойство для хранения массива роутов
-     * @var array 
      */
     private $routes;
 
@@ -49,7 +47,7 @@ class Router {
                 // Получаем внутренний путь из внешнего согласно правилу.
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
-                // Определить контроллер, action, параметры
+                // Определяем контроллер, action, параметры
                 $segments = explode('/', $internalRoute);
 
                 $controllerName = array_shift($segments) . 'Controller';
@@ -67,9 +65,12 @@ class Router {
                     include_once($controllerFile);
                 }
 
-                //Создать объект, вызвать метод (т.е. action)
+                //Создать объект 
                 $controllerObject = new $controllerName;
 
+                /* Вызываем  метод $actionName у класса $controllerObject
+                 *  с заданными параметрами
+                 */
                 $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 
                 // Если метод контроллера успешно вызван, завершаем работу роутера
