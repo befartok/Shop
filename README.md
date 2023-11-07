@@ -14,6 +14,11 @@
 
 Учебный Интернет-магазин S-Eqip
 
+http://frwrdmailr.temp.swtest.ru/
+
+<p align="">
+      <img src="https://github.com/befartok/Shop/blob/master/template/images/screen.JPG" width="700">
+</p>
 
 
 
